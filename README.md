@@ -50,15 +50,5 @@ password: admin123
    
  <h4> Testing </h4>
   
-* The user model and Instructors controller are tested using Rspec. The user model is tested through all its validations whereas the instructor controller is tested for all its CRUD operations. 
-   
- 
-<h4> Contributors <h4>
-  
-| | Name | Unity ID |
-|-----|---------|---------| 
-| 1 | Atharva Joshi | amjoshi3 |
-| 2 | Kriti Khullar | kkhulla  |
-| 3 | Rucha Kolekar | rbkoleka |
- 
+* The user model and Instructors controller are tested using Rspec. The user model is tested through all its validations whereas the instructor controller is tested for all its CRUD operations.  
    
