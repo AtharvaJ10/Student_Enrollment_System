@@ -1,0 +1,80 @@
+<% if current_user.user_type=='Student' %>
+  <h2>Courses Waitlisted</h2>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Instructor Name</th>
+        <th scope="col">Weekday One</th>
+        <th scope="col">Weekday Two</th>
+        <th scope="col">Start Time</th>
+        <th scope="col">End Time</th>
+        <th scope="col">Course Code</th>
+        <th scope="col">Capacity</th>
+        <th scope="col">Waitlist Capacity</th>
+        <th scope="col">Status</th>
+        <th scope="col">Room</th>
+        <th scope="col">Drop?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @courses.each do |course| %>
+        <% course.each do |sub| %>
+          <tr>
+            <td><%= sub.name %></td>
+            <td><%= sub.description %></td>
+            <td><%= sub.instructor_name %></td>
+            <td><%= sub.weekdayone %></td>
+            <td><%= sub.weekdaytwo %></td>
+            <td><%= sub.start_time %></td>
+            <td><%= sub.end_time %></td>
+            <td><%= sub.course_code %></td>
+            <td><%= sub.capacity %></td>
+            <td><%= sub.waitlist_capacity %></td>
+            <td><%= sub.status %></td>
+            <td><%= sub.room %></td>
+            <% @waitlist2 = Waitlist.where(student_id: @userid, course_id: sub.id)%>
+            <td><%= button_to "Drop", @waitlist2[0], method: :delete %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+
+<% else %>
+  
+  <h2>Students waitlisted </h2>
+  <% pointer = 0 %>
+  <% @courses.each do |course| %>
+    <p>Course: <%= course.name %> - <%= course.course_code %>   &nbsp &nbsp                                
+    <%= link_to "Add a student", students_path(:c_id => {:course_id => course.id}, :flag => {:flag_val => '1'}, :waitlist => {:wl => '1'}) %></p>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>   
+          <th scope="col">Name</th> 
+          <th scope="col">Phone</th>
+          <th scope="col"> Major</th>
+          <th scope="col"> Remove? </th>
+        </tr>
+      </thead>
+      <tbody>
+          <% @course_wise[pointer].each do |student| %>
+            <% student.each do |sub| %>
+              <tr>
+                <td><%= sub.id %></td>
+                <td><%= User.find(Student.find(sub.id).user_id).name %> </td>
+                <td><%= sub.phone %></td>
+                <td><%= sub.major %></td>
+                <% @waitlist2 = Waitlist.where(student_id: sub.id, course_id: course.id)%>
+                <td><%= button_to "Remove Enrollment", @waitlist2[0], method: :delete %></td>
+              </tr>
+            <% end %>
+          <% end %>
+      </tbody>
+    </table>
+    <% pointer = pointer + 1 %>
+  <% end %>
+<% end %>

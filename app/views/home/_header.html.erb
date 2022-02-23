@@ -1,0 +1,73 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark thead-dark">
+  <div class="container-fluid">
+    <%= link_to 'Student Enrollment System', courses_path, class:"navbar-brand" %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        
+       
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class:"nav-link" %>
+          </li>
+          <li class="nav-item">
+              <%= link_to 'Show courses', courses_path, class:"nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Show enrollments', enrollments_path, class:"nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Show waitlists', waitlists_path, class:"nav-link" %>
+          </li>
+          <% if current_user.user_type == "Instructor" %>
+            <li class="nav-item">
+              <%= link_to 'Edit Profile', edit_instructor_path(Instructor.find_by(user_id: current_user.id).id), class:"nav-link" %>
+            </li>
+          <% elsif current_user.user_type == "Student" %>
+            <li class="nav-item">
+              <%= link_to 'Edit Profile', edit_student_path(Student.find_by(user_id: current_user.id).id), class:"nav-link" %>
+            </li>
+          <% end %>
+          <% if current_user.user_type == "Admin" %>
+            <li class="nav-item">
+              <%= link_to 'Show Students', students_path(:c_id => {:course_id => -1}, :flag => {:flag_val => '0'}), class:"nav-link" %>
+            </li>  
+            <li class="nav-item">
+              <%= link_to 'Show Instructors', instructors_path, class:"nav-link" %>
+            </li>  
+            <li class="nav-item">
+              <%= link_to 'Edit Profile', edit_instructor_path('0'), class:"nav-link" %>
+            </li> 
+          <% end %>            
+        <% else %>
+          <li class="nav-item">
+            <%= link_to 'Sign Up', new_user_registration_path, class:"nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Sign In', new_user_session_path, class:"nav-link" %>
+          </li>
+        <% end %>                
+      </ul>
+
+      <ul class="navbar-nav navbar-brand ml-auto mb-5 mb-lg-0">
+      <% if user_signed_in? %>
+        <li class="nav-item">
+        Welcome <%= current_user.name %>
+        <% if current_user.user_type=="Student" %>
+        , Role: <b><%= current_user.user_type %></b>
+        <% elsif current_user.user_type=="Instructor"%>
+        , Role: <b><i><%= current_user.user_type%></i></b>
+        <% else %>
+        , Role: <u><%= current_user.user_type%></u>
+        <% end %>
+        
+        
+        </li>
+      <% end %> 
+      </ul>
+
+    </div>
+  </div>
+</nav>

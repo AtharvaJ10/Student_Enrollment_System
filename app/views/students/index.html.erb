@@ -1,0 +1,37 @@
+<h2>Students list </h2>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>   
+      <th scope="col">Name</th> 
+      <th scope="col">Phone</th>
+      <th scope="col"> Major</th>
+      <th scope="col">View</th>
+      <% if @f[:flag_val]!='0' %>
+        <th scope="col"> Enroll? </th>
+      <% end %>
+    </tr>
+  </thead>
+    
+  <% @students.each do |sub| %>
+    <tbody>
+        <tr>
+          <td><%= sub.id %></td>
+          <td><%= User.find(Student.find(sub.id).user_id).name %> </td>
+          <td><%= sub.phone %></td>
+          <td><%= sub.major %></td>
+          <td><%= link_to "Show this student", sub %> </td>
+          <% if @f[:flag_val]!='0' %>
+            <% if @par2[:wl]!='1' %>
+              <td><%= link_to "Enroll", new_enrollment_path(:enroll => {:course_id => @par[:course_id],:student_id => sub.id}) %></td>
+            <% else %>
+              <td><%= link_to "Enroll", new_waitlist_path(:enroll => {:course_id => @par[:course_id],:student_id => sub.id}) %></td>
+            <% end %>
+          <%end%>
+        </tr>
+    </tbody>
+  <% end %>
+</table>
+<% if @f[:flag_val]=='0' %>
+  <%= link_to "New student", new_student_path %>
+<% end %>

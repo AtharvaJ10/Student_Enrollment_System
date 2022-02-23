@@ -1,0 +1,76 @@
+<%= form_with(model: course) do |form| %>
+  <% if course.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(course.errors.count, "error") %> prohibited this course from being saved:</h2>
+
+      <ul>
+        <% course.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :description, style: "display: block" %>
+    <%= form.text_field :description %>
+  </div>
+
+  <div>
+    <%= form.label :instructor_name, style: "display: block" %>
+    <%= form.text_field :instructor_name %>
+  </div>
+
+  <div>
+    <%= form.label :weekdayone, style: "display: block" %>
+    <%= form.text_field :weekdayone, placeholder: "MON, TUE, WED, THU, FRI"%>
+  </div>
+
+  <div>
+    <%= form.label :weekdaytwo, style: "display: block" %>
+    <%= form.text_field :weekdaytwo, placeholder: "MON, TUE, WED, THU, FRI" %>
+  </div>
+
+  <div>
+    <%= form.label :start_time, style: "display: block" %>
+    <%= form.text_field :start_time, placeholder: "HH:MM" %>
+  </div>
+
+  <div>
+    <%= form.label :end_time, style: "display: block" %>
+    <%= form.text_field :end_time, placeholder: "HH:MM" %>
+  </div>
+
+  <div>
+    <%= form.label :course_code, style: "display: block" %>
+    <%= form.text_field :course_code, placeholder: "3 letters followed by 3 numbers" %>
+  </div>
+
+  <div>
+    <%= form.label :capacity, style: "display: block" %>
+    <%= form.number_field :capacity, placeholder: "Greater than 0" %>
+  </div>
+
+  <div>
+    <%= form.label :waitlist_capacity, style: "display: block" %>
+    <%= form.number_field :waitlist_capacity, placeholder: "More or equal to 0" %>
+  </div>
+
+  <div>
+    <%= form.label :room, style: "display: block" %>
+    <%= form.text_field :room %>
+  </div>
+
+  <div>
+    <%= form.text_field :status, value: "OPEN", :readonly => true , type: :hidden%>
+  </div>
+  
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

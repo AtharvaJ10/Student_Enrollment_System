@@ -1,0 +1,67 @@
+<% if user_signed_in? && current_user.user_type=="Admin" %>
+
+  <form method="post" action="/create_student">
+
+      <label>Name</label>
+      <input name="name" type="text" required/>
+      <br /> <br />
+
+      <label>Email</label>
+      <input name="email" type = "text" required>
+      <br /> <br />
+
+      <label>Password</label>
+      <input name="password" type="password" required/>
+      <br /> <br />
+
+      <label>DOB</label>
+      <input name="dob" type="date" pattern = "^(0[1-9]|1[012])[-/.](0[1-9]|[12][0-9]|3[01])[-/.](19|20)\\d\\d$" required/>
+      <br /> <br />
+
+      <label>Phone</label>
+      <input name="phone" type="tel" placeholder = "XXXXXXXXXX" pattern = "^\d{10}$" required/>
+      <br /> <br />
+
+      <label>Major</label>
+      <input name="major" type="text" required/>
+      <br /> <br />
+
+      <input type="submit" value="Create Student" />
+
+    </form>
+
+<% else %>
+
+  <%= form_with(model: student) do |form| %>
+    <% if student.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(student.errors.count, "error") %> prohibited this student from being saved:</h2>
+
+        <ul>
+          <% student.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div>
+      <%= form.label :dob, style: "display: block" %>
+      <%= form.text_field :dob %>
+    </div>
+
+    <div>
+      <%= form.label :phone, style: "display: block" %>
+      <%= form.text_field :phone %>
+    </div>
+
+    <div>
+      <%= form.label :major, style: "display: block" %>
+      <%= form.text_field :major %>
+    </div>
+
+    <div>
+      <%= form.submit %>
+    </div>
+  <% end %>
+<% end %>

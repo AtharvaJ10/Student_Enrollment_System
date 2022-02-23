@@ -1,0 +1,48 @@
+<% if user_signed_in? && current_user.user_type=="Admin" %>
+
+  <form method="post" action="/create_user">
+
+      <label>Name</label>
+      <input name="name" type="text" required/>
+      <br /> <br />
+
+      <label>Email</label>
+      <input name="email" type = "text" required>
+      <br /> <br />
+
+      <label>Password</label>
+      <input name="password" type="password" required/>
+      <br /> <br />
+
+      <label>Department</label>
+      <input name="department" type="text" required/>
+      <br /> <br />
+
+      <input type="submit" value="Create User" />
+
+    </form>
+
+<% else %>
+  <%= form_with(model: instructor) do |form| %>
+    <% if instructor.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(instructor.errors.count, "error") %> prohibited this instructor from being saved:</h2>
+
+        <ul>
+          <% instructor.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div>
+      <%= form.label :department, style: "display: block" %>
+      <%= form.text_field :department %>
+    </div>
+
+    <div>
+      <%= form.submit %>
+    </div>
+  <% end %>
+<% end %>

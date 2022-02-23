@@ -1,0 +1,30 @@
+<h2>All Instructors </h2>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>   
+      <th scope="col">Name</th>
+      <th scope="col">Email</th> 
+      <th scope="col"> Department </th>
+      <th scope="col"> View </th>
+      <th scope="col"> Add a course </th>
+
+    </tr>
+  </thead>
+    
+  <% @instructors.each do |sub| %>
+    <tbody>
+        <tr>
+          <td><%= sub.id %></td>
+          <td><%= User.find(Instructor.find(sub.id).user_id).name %> </td>
+          <td><%= User.find(Instructor.find(sub.id).user_id).email %></td>
+          <td><%= sub.department %></td>
+          <td><%= link_to "Show this instructor", sub %> </td>
+          <td><%= link_to "Add a course", new_course_path(:ins => {:ins_id => sub.id}) %> </td>
+          
+        </tr>
+    </tbody>
+  <% end %>
+</table>
+
+<%= link_to "New instructor", new_instructor_path %>

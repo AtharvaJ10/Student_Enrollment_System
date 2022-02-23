@@ -1,0 +1,63 @@
+<% if current_user.user_type=="Admin" && !@instructor %>
+  <h1>Editing Admin</h1>
+    <form method="post" action="/edit_admin">
+
+    <label>Name</label>
+    <input name="name" type="text" value = <%= current_user.name %> required/>
+    <br /> <br />
+
+    <label>Email</label>
+    <input name="email" type = "text" value = "admin@ncsu.edu" readonly>
+    <br /> <br />
+
+    <label>Password</label>
+    <input name="password" type="text" value = "admin123" readonly/>
+    <br /> <br />
+
+    <label>Phone</label>
+    <input name="phone" type="text" value = <%= Admin.find_by(user_id: current_user.id).phone %> required/>
+    <br /> <br />
+
+    <input type="submit" value="Update Profile" />
+
+  </form>
+
+<% else %>
+  <h1>Editing instructor</h1>
+  <% if user_signed_in? && current_user.user_type=="Admin" %>
+
+    <form method="post" action="/edit_user">
+
+      <label>Name</label>
+      <input name="name" type="text" required/>
+      <br /> <br />
+
+      <label>Email</label>
+      <input name="email" type = "text" required>
+      <br /> <br />
+
+      <label>Password</label>
+      <input name="password" type="password" required/>
+      <br /> <br />
+
+      <label>Department</label>
+      <input name="department" type="text" required/>
+      <br /> <br />
+
+      <input type = "hidden" name='id' type='text' value=<%= @instructor.id %> > <br>
+
+      <input type="submit" value="Update User" />
+
+    </form>
+
+    <br>
+
+    <div>
+      <%= link_to "Show this instructor", @instructor %> |
+      <%= link_to "Back to instructors", instructors_path %>
+    </div>
+
+  <% else %>
+    <%= render "form", instructor: @instructor %>
+  <% end %>
+<% end %>

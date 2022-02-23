@@ -1,0 +1,44 @@
+<h1>Editing Student</h1>
+<% if user_signed_in? && current_user.user_type=="Admin" %>
+
+  <form method="post" action="/edit_student">
+
+    <label>Name</label>
+    <input name="name" type="text" required/>
+    <br /> <br />
+
+    <label>Email</label>
+    <input name="email" type = "text" required>
+    <br /> <br />
+
+    <label>Password</label>
+    <input name="password" type="password" required/>
+    <br /> <br />
+
+    <label>Date of Birth</label>
+    <input name="dob" type="text" required/>
+    <br /> <br />
+
+    <label>Phone number</label>
+    <input name="phone" type="text" required/>
+    <br /> <br />
+
+    <label>Major</label>
+    <input name="major" type="text" required/>
+    <br /> <br />
+
+    <input type = "hidden" name='id' type='text' value=<%= @student.id %> > <br>
+
+    <input type="submit" value="Update User" />
+
+  </form>
+
+  <br>
+
+  <div>
+    <%= link_to "Show this student", @student %> |
+    <%= link_to "Back to students", students_path(:flag => {:flag_val => '0'}) %>
+  </div>
+<% else %>
+  <%= render "form", student: @student %>
+<% end %>
